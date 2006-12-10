@@ -1,3 +1,12 @@
+#
+# Conditional build:
+%bcond_without	ansi			# only unicode packages
+%bcond_without	x11			# don't build wxX11 packages
+#
+# TODO:
+# wxPython
+# ansi
+# x11
 
 %define 	_name	wxmozilla
 
@@ -5,7 +14,7 @@ Summary:	wxWidgets component for embedding the Mozilla browser into wxWidgets ap
 Summary(pl):	Komponent wxWidgets do osadzania przegl±darki Mozilla w aplikacjach wxWidgets
 Name:		wxMozilla
 Version:	0.5.6
-Release:	0.1
+Release:	0.2
 License:	wxWidgets Licence (LGPL with exception)
 Group:		Applications
 Source0:	http://dl.sourceforge.net/wxmozilla/%{_name}-%{version}.tar.gz
@@ -13,6 +22,10 @@ Source0:	http://dl.sourceforge.net/wxmozilla/%{_name}-%{version}.tar.gz
 Patch0:		%{name}-seamonkey.patch
 URL:		http://wxmozilla.sourceforge.net/
 BuildRequires:	wxGTK2-unicode-devel
+%{?with_x11:BuildRequires:	wxX11-unicode-devel
+%{?with_ansi:BuildRequires:	wxX11-devel}
+}
+%{?with_ansi:BuildRequires:	wxGTK2-devel}
 BuildRequires:	wxWidgets-devel
 BuildRequires:	nspr-devel
 BuildRequires:	seamonkey-devel
@@ -31,31 +44,33 @@ interfejs Mozilli XPCOM (miêdzyplatformowy COM) do osadzania
 przegl±darki lub edytora HTML wewn±trz aplikacji.
 
 %package devel
-Summary:	Header files for ... library
-Summary(pl):	Pliki nag³ówkowe biblioteki ...
+Summary:	Header files for wxMozilla library
+Summary(pl):	Pliki nag³ówkowe biblioteki wxMozilla
 Group:		Development/Libraries
-# if base package contains shared library for which these headers are
-#Requires:	%{name} = %{version}-%{release}
-# if -libs package contains shared library for which these headers are
-#Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
-Header files for ... library.
+Header files for wxMozilla library.
 
 %description devel -l pl
-Pliki nag³ówkowe biblioteki ....
+Pliki nag³ówkowe biblioteki wxMozilla
 
-%package static
-Summary:	Static ... library
-Summary(pl):	Statyczna biblioteka ...
+#%%package wxBase-devel
+#%%package wxBase-unicode-devel
+#%%package wxGTK2-devel
+
+%package wxGTK2-unicode-devel
+Summary:	Header files for wxMozilla library GTK2, Unicode version
+Summary(pl):	Pliki nag³ówkowe biblioteki wxMozilla wersja GTK2, Unicode
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel
+Requires:	wxGTK2-unicode
 
-%description static
-Static ... library.
+%description wxGTK2-unicode-devel
+Header files for wxMozilla library GTK2, Unicode version.
 
-%description static -l pl
-Statyczna biblioteka ....
+%description wxGTK2-unicode-devel -l pl
+Pliki nag³ówkowe biblioteki wxMozilla wersja GTK2, Unicode
+
 
 %prep
 %setup -q -n %{_name}-%{version}
@@ -65,11 +80,22 @@ Statyczna biblioteka ....
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-%configure \
-             --enable-seamonkey \
-             --with-wx-config=/usr/bin/wx-gtk2-unicode-config
 
-%{__make}
+for gui in 'gtk2' %{?with_x11:'x11univ'} ; do
+
+for mode in 'unicode' %{?with_ansi:'ansi'} ; do
+	objdir=`echo obj${gui}${mode}`
+	mkdir $objdir
+	cd $objdir
+	../%configure \
+            --enable-seamonkey \
+            --with-wx-config=/usr/bin/wx-${gui}-${mode}-config
+        %{__make}
+	cd ..
+done
+
+done
+
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -77,14 +103,36 @@ rm -rf $RPM_BUILD_ROOT
 #install -d $RPM_BUILD_ROOT
 #install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+for gui in 'gtk2' %{?with_x11:'x11univ'} ; do
+
+for mode in 'unicode' %{?with_ansi:'ansi'} ; do
+	objdir=`echo obj${gui}${mode}`
+	cd $objdir
+	%{__make} install \
+		DESTDIR=$RPM_BUILD_ROOT
+	mv $RPM_BUILD_ROOT%{_libdir}/pkgconfig/wxmozilla.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/wxmozilla-${gui}-${mode}.pc 
+	cd ..
+done
+
+done
+
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -a demo $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files devel
 %defattr(644,root,root,755)
-%doc AUTHORS CREDITS ChangeLog NEWS README THANKS TODO
+%doc AUTHORS ChangeLog NEWS README
+%{_includedir}/wxmozilla/*
 
-#%{_examplesdir}/%{name}-%{version}
+#%%files wxBase-devel
+#%%files wxBase-unicode-devel
+#%%files wxGTK2-devel
+
+%files wxGTK2-unicode-devel
+%defattr(644,root,root,755)
+%{_includedir}/wx*
+%{_libdir}/libwxmozilla_gtk2u*
+%{_libdir}/pkgconfig/wxmozilla-gtk2-unicode.pc
