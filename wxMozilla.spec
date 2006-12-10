@@ -1,46 +1,34 @@
-#
 
 %define 	_name	wxmozilla
 
-Summary:	wxWidgets component for embedding the Mozilla browser into any wxWidgets application.
-Summary(pl):	Komponent wxWidgets s³u¿±cy do osadzania przegl±darki Mozilla w aplikacjach wxWidgets.
+Summary:	wxWidgets component for embedding the Mozilla browser into wxWidgets applications
+Summary(pl):	Komponent wxWidgets do osadzania przegl±darki Mozilla w aplikacjach wxWidgets
 Name:		wxMozilla
 Version:	0.5.6
 Release:	0.1
 License:	wxWidgets Licence (LGPL with exception)
 Group:		Applications
-Source0:	http://dl.sourceforge.net/alleg/%{_name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/wxmozilla/%{_name}-%{version}.tar.gz
 # Source0-md5:	f67edaaa17ed33a360c7c636b98b78fd
 Patch0:		%{name}-seamonkey.patch
 URL:		http://wxmozilla.sourceforge.net/
-BuildRequires:	wxWidgets-devel
 BuildRequires:	wxGTK2-unicode-devel
+BuildRequires:	wxWidgets-devel
 BuildRequires:	nspr-devel
 BuildRequires:	seamonkey-devel
-#BuildRequires:	autoconf
-#BuildRequires:	automake
-#BuildRequires:	intltool
-#BuildRequires:	libtool
-#Requires(postun):	-
-#Requires(pre,post):	-
-#Requires(preun):	-
-#Requires:	-
-#Provides:	-
-#Provides:	group(foo)
-#Provides:	user(foo)
-#Obsoletes:	-
-#Conflicts:	-
-#BuildArch:	noarch
-#ExclusiveArch:	%{ix86}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-wxMozilla is a project to develop a wxWidgets component for embedding the
-Mozilla browser into any wxWidgets application. The wxMozilla classes use
-Mozilla's XPCOM (Cross Platrom COM) interface to embed a HTML browser or
-editor within the application.
+wxMozilla is a project to develop a wxWidgets component for embedding
+the Mozilla browser into any wxWidgets application. The wxMozilla
+classes use Mozilla's XPCOM (Cross Platform COM) interface to embed a
+HTML browser or editor within the application.
 
 %description -l pl
+wxMozilla to projekt stworzenia komponentu do osadzania przegl±darki
+Mozilla w aplikacjach wxWidgets. Klasy wxMozilla wykorzystuj±
+interfejs Mozilli XPCOM (miêdzyplatformowy COM) do osadzania
+przegl±darki lub edytora HTML wewn±trz aplikacji.
 
 %package devel
 Summary:	Header files for ... library
@@ -100,10 +88,3 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS CREDITS ChangeLog NEWS README THANKS TODO
 
 #%{_examplesdir}/%{name}-%{version}
-
-%if %{with subpackage}
-%files subpackage
-%defattr(644,root,root,755)
-#%doc extras/*.gz
-#%{_datadir}/%{name}-ext
-%endif
