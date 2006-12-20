@@ -21,14 +21,15 @@ Source0:	http://dl.sourceforge.net/wxmozilla/%{_name}-%{version}.tar.gz
 # Source0-md5:	f67edaaa17ed33a360c7c636b98b78fd
 Patch0:		%{name}-seamonkey.patch
 URL:		http://wxmozilla.sourceforge.net/
-BuildRequires:	wxGTK2-unicode-devel
-%{?with_x11:BuildRequires:	wxX11-unicode-devel
-%{?with_ansi:BuildRequires:	wxX11-devel}
-}
-%{?with_ansi:BuildRequires:	wxGTK2-devel}
-BuildRequires:	wxWidgets-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	nspr-devel
 BuildRequires:	seamonkey-devel
+BuildRequires:	wxGTK2-unicode-devel
+%{?with_x11:BuildRequires:	wxX11-unicode-devel}
+%{?with_ansi:BuildRequires:	wxX11-devel}
+%{?with_ansi:BuildRequires:	wxGTK2-devel}
+BuildRequires:	wxWidgets-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -62,7 +63,7 @@ Pliki nag³ówkowe biblioteki wxMozilla
 Summary:	Header files for wxMozilla library GTK2, Unicode version
 Summary(pl):	Pliki nag³ówkowe biblioteki wxMozilla wersja GTK2, Unicode
 Group:		Development/Libraries
-Requires:	%{name}-devel
+Requires:	%{name}-devel = %{version}-%{release}
 Requires:	wxGTK2-unicode
 
 %description wxGTK2-unicode-devel
@@ -70,7 +71,6 @@ Header files for wxMozilla library GTK2, Unicode version.
 
 %description wxGTK2-unicode-devel -l pl
 Pliki nag³ówkowe biblioteki wxMozilla wersja GTK2, Unicode
-
 
 %prep
 %setup -q -n %{_name}-%{version}
@@ -96,12 +96,8 @@ done
 
 done
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
-# create directories if necessary
-#install -d $RPM_BUILD_ROOT
-#install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 for gui in 'gtk2' %{?with_x11:'x11univ'} ; do
 
@@ -125,7 +121,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
-%{_includedir}/wxmozilla/*
+%{_includedir}/wxmozilla
 
 #%%files wxBase-devel
 #%%files wxBase-unicode-devel
@@ -133,6 +129,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files wxGTK2-unicode-devel
 %defattr(644,root,root,755)
+# FIXME: dup with -devel
 %{_includedir}/wx*
+# FIXME: perms, extensions?
 %{_libdir}/libwxmozilla_gtk2u*
-%{_libdir}/pkgconfig/wxmozilla-gtk2-unicode.pc
+%{_pkgconfigdir}/wxmozilla-gtk2-unicode.pc
