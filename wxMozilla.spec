@@ -11,7 +11,7 @@
 %define 	_name	wxmozilla
 
 Summary:	wxWidgets component for embedding the Mozilla browser into wxWidgets applications
-Summary(pl):	Komponent wxWidgets do osadzania przegl±darki Mozilla w aplikacjach wxWidgets
+Summary(pl.UTF-8):   Komponent wxWidgets do osadzania przeglÄ…darki Mozilla w aplikacjach wxWidgets
 Name:		wxMozilla
 Version:	0.5.6
 Release:	0.2
@@ -38,22 +38,22 @@ the Mozilla browser into any wxWidgets application. The wxMozilla
 classes use Mozilla's XPCOM (Cross Platform COM) interface to embed a
 HTML browser or editor within the application.
 
-%description -l pl
-wxMozilla to projekt stworzenia komponentu do osadzania przegl±darki
-Mozilla w aplikacjach wxWidgets. Klasy wxMozilla wykorzystuj±
-interfejs Mozilli XPCOM (miêdzyplatformowy COM) do osadzania
-przegl±darki lub edytora HTML wewn±trz aplikacji.
+%description -l pl.UTF-8
+wxMozilla to projekt stworzenia komponentu do osadzania przeglÄ…darki
+Mozilla w aplikacjach wxWidgets. Klasy wxMozilla wykorzystujÄ…
+interfejs Mozilli XPCOM (miÄ™dzyplatformowy COM) do osadzania
+przeglÄ…darki lub edytora HTML wewnÄ…trz aplikacji.
 
 %package devel
 Summary:	Header files for wxMozilla library
-Summary(pl):	Pliki nag³ówkowe biblioteki wxMozilla
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki wxMozilla
 Group:		Development/Libraries
 
 %description devel
 Header files for wxMozilla library.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki wxMozilla
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki wxMozilla
 
 #%%package wxBase-devel
 #%%package wxBase-unicode-devel
@@ -61,7 +61,7 @@ Pliki nag³ówkowe biblioteki wxMozilla
 
 %package wxGTK2-unicode-devel
 Summary:	Header files for wxMozilla library GTK2, Unicode version
-Summary(pl):	Pliki nag³ówkowe biblioteki wxMozilla wersja GTK2, Unicode
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki wxMozilla wersja GTK2, Unicode
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	wxGTK2-unicode
@@ -69,8 +69,8 @@ Requires:	wxGTK2-unicode
 %description wxGTK2-unicode-devel
 Header files for wxMozilla library GTK2, Unicode version.
 
-%description wxGTK2-unicode-devel -l pl
-Pliki nag³ówkowe biblioteki wxMozilla wersja GTK2, Unicode
+%description wxGTK2-unicode-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki wxMozilla wersja GTK2, Unicode
 
 %prep
 %setup -q -n %{_name}-%{version}
