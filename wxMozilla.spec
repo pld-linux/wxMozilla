@@ -11,7 +11,7 @@
 %define 	_name	wxmozilla
 
 Summary:	wxWidgets component for embedding the Mozilla browser into wxWidgets applications
-Summary(pl.UTF-8):   Komponent wxWidgets do osadzania przeglądarki Mozilla w aplikacjach wxWidgets
+Summary(pl.UTF-8):	Komponent wxWidgets do osadzania przeglądarki Mozilla w aplikacjach wxWidgets
 Name:		wxMozilla
 Version:	0.5.6
 Release:	0.2
@@ -46,7 +46,7 @@ przeglądarki lub edytora HTML wewnątrz aplikacji.
 
 %package devel
 Summary:	Header files for wxMozilla library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki wxMozilla
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki wxMozilla
 Group:		Development/Libraries
 
 %description devel
@@ -61,7 +61,7 @@ Pliki nagłówkowe biblioteki wxMozilla
 
 %package wxGTK2-unicode-devel
 Summary:	Header files for wxMozilla library GTK2, Unicode version
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki wxMozilla wersja GTK2, Unicode
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki wxMozilla wersja GTK2, Unicode
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	wxGTK2-unicode
